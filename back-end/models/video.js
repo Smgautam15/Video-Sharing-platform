@@ -6,10 +6,21 @@ const videoSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    description: {
+    desc: {
         type: String,
         required: true,
-        unique: true
+    },
+    photo: {
+        type: String,
+        required: false,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    categories: {
+        type: Array,
+        required: false,
     },
     views: {
         type: Number,
@@ -20,18 +31,6 @@ const videoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: Array,
-        required: true
-    },
-    uploadDate: {
-        type: Date,
-        default: Date.now
-    },
-    uploadedBy: {
-        type: String,
-        require: true
-    }
 }, { timestamps: true });
 
 const Video = mongoose.model('videos', videoSchema);
