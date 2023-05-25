@@ -15,8 +15,12 @@ const VideoCard = ({startingPartOfUrl, original_title, poster_path, release_date
     )
 }
 
-const Gallery = ({startingPartOfUrl, allVideo}) =>{
+const Gallery = ({startingPartOfUrl, allVideo, searchKeyword}) =>{
     const [viewAll, setViewAll] = useState(false);
+    let temp = null;
+    if(searchKeyword){
+        temp = allVideo.filter(video => video.original_title.toLowerCase().includes(searchKeyword.toLowerCase()));
+    }
     return(
         <div className="gallery">
             <p className="recent">
@@ -24,10 +28,14 @@ const Gallery = ({startingPartOfUrl, allVideo}) =>{
                 <span onClick={() => setViewAll(!viewAll)}>{viewAll ? 'View Less' : 'View All'}</span>
             </p>
             <div className="g-div">
-                {
-                    viewAll ?
-                    allVideo.map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl}  {...video} />) :
-                    allVideo.slice(0, 4).map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl} {...video} />)
+                {   searchKeyword ?
+                    temp.map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl}  {...video} />) :
+                    (
+                        viewAll ?
+                        allVideo.map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl}  {...video} />) :
+                        allVideo.slice(0, 4).map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl} {...video} />)
+                    )
+                    
                 }
             </div>
         </div>

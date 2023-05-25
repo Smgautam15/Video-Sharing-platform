@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 
-const Navbar = ({indicator}) =>{
+const Navbar = ({setSearchKeyword}) =>{
     const navigate = useNavigate();
     const signout = event =>{
         localStorage.removeItem('username');
@@ -11,7 +11,7 @@ const Navbar = ({indicator}) =>{
             <ul>
                 <li className="title" onClick={() => navigate('/')}>Tuner</li>
                 <li>
-                    <input type="search" name="search" id="search" placeholder="Search" />
+                    <input type="search" name="search" onChange={event => setSearchKeyword(event.target.value)} id="search" placeholder="Search" />
                 </li>
                 <li>
                     {

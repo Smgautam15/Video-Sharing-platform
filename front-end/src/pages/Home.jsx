@@ -5,6 +5,7 @@ import {useState, useEffect} from 'react';
 import fetchDataFromApi from '../utils/api';
 
 const Home = () =>{
+    const [searchKeyword, setSearchKeyword] = useState('');
     const [firstVideo, setFirstVideo] = useState({});
     const [allVideo, setAllVideo] = useState([]);
     const [startingPartOfUrl, setStartingPartOfUrl] = useState('');
@@ -23,9 +24,9 @@ const Home = () =>{
     }
     return(
         <div className="home">
-            <Navbar />
+            <Navbar setSearchKeyword={setSearchKeyword} />
             <Hero startingPartOfUrl={startingPartOfUrl} {...firstVideo} />
-            <Gallery startingPartOfUrl={startingPartOfUrl} allVideo={allVideo} />
+            <Gallery startingPartOfUrl={startingPartOfUrl} allVideo={allVideo} searchKeyword={searchKeyword} />
         </div>
     )
 }
