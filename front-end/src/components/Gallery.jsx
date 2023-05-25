@@ -1,76 +1,22 @@
-// import axios from 'axios';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
-const data = [
-    {
-        title: 'India',
-        views: 1000,
-        uploadedBy: 'Ibrahim Ansari'
-    },
-    {
-        title: 'India',
-        views: 1000,
-        uploadedBy: 'Ibrahim Ansari'
-    },
-    {
-        title: 'India',
-        views: 1000,
-        uploadedBy: 'Ibrahim Ansari'
-    },
-    {
-        title: 'India',
-        views: 1000,
-        uploadedBy: 'Ibrahim Ansari'
-    },
-    {
-        title: 'India',
-        views: 1000,
-        uploadedBy: 'Ibrahim Ansari'
-    },
-    {
-        title: 'India',
-        views: 1000,
-        uploadedBy: 'Ibrahim Ansari'
-    },
-    {
-        title: 'India',
-        views: 1000,
-        uploadedBy: 'Ibrahim Ansari'
-    },
-    {
-        title: 'India',
-        views: 1000,
-        uploadedBy: 'Ibrahim Ansari'
-    }
-]
-
-const VideoCard = ({title, views, uploadedBy}) =>{
+const VideoCard = ({startingPartOfUrl, original_title, poster_path, release_date}) =>{
     return(
         <div className="card">
-            <iframe src="https://www.youtube.com/embed/es4x5R-rV9s" title="Amazon 4k - The World’s Largest Tropical Rainforest Part 2 | Jungle Sounds | Scenic Relaxation Film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <img src={startingPartOfUrl + poster_path} alt="poster" />
             <div className="video-info">
-                <p>{title}</p>
+                <p>{original_title}</p>
                 <p className="date-info">
-                    <span>{new Date().toDateString()}</span>
-                    <span>{views} views</span>
+                    <span>{release_date}</span>
+                    <span>0 views</span>
                 </p>
-                <p>{uploadedBy}</p>
             </div>
         </div>
     )
 }
 
-const Gallery = () =>{
-    const [gallery, setGallery] = useState([]);
+const Gallery = ({startingPartOfUrl, allVideo}) =>{
     const [viewAll, setViewAll] = useState(false);
-    useEffect(() =>{
-        // const getGalleryForLandingPage = async () =>{
-        //     const response = await axios.get('http://localhost:8080/');
-        //     setGallery([...response.data, ...response.data, ...response.data, ...response.data]);
-        // }
-        // getGalleryForLandingPage();
-        setGallery(data);
-    }, [])
     return(
         <div className="gallery">
             <p className="recent">
@@ -80,8 +26,8 @@ const Gallery = () =>{
             <div className="g-div">
                 {
                     viewAll ?
-                    gallery.map(video => <VideoCard {...video} />) :
-                    gallery.slice(0, 4).map(video => <VideoCard {...video} />)
+                    allVideo.map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl}  {...video} />) :
+                    allVideo.slice(0, 4).map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl} {...video} />)
                 }
             </div>
         </div>

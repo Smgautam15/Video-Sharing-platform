@@ -1,9 +1,11 @@
 .hero{
     position: relative;
     .video-container{
-        iframe{
+        width: 100%;
+        height: 90vh;
+        img{
             width: 100%;
-            height: calc(100vh - 5.9rem);
+            height: 100%;
         }
     }
     .video-info{
