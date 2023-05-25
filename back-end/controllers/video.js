@@ -1,14 +1,20 @@
 const Video = require('../models/video');
 
 //CREATE POST
-const createNewPost = async (req, res) => {
-    const newVideo = new Video(req.body);
-    try {
-      const savedPost = await newPost.save();
-      res.status(200).json(savedPost);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+const createNewPost = async (req, res) => { 
+  const info = {...req.body};
+  console.log(info);
+  const newVideo = new Video({...info, video: `/videos/${req.file.filename}`});
+  console.log(newVideo);
+  try {
+    console.log('hello');
+    const savedPost = await newVideo.save();
+    console.log(savedPost);
+    res.status(200).json(savedPost);
+  } catch (err) {
+    console.log('Error')
+    res.status(500).json(err);
+  }
 }
 
 //DELETE POST
@@ -42,15 +48,10 @@ const getPost = async (req, res) => {
 
 // Get all posts
 const getAllPost = async (req, res) => {
-    const username = req.query.user;
     try {
-      let videos;
-      if (username) {
-        videos = await Video.find({ username });
-      } else {
-        videos = await Video.find({});
-      }
-      res.status(200).json(videos);
+      const allVideo = await Video.find({});
+      console.log(allVideo);
+      res.status(200).json(allVideo);
     } catch (err) {
       res.status(500).json(err);
     }

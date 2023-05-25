@@ -10,9 +10,9 @@ const videoSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    photo: {
+    video: {
         type: String,
-        required: false,
+        required: true,
     },
     username: {
         type: String,
@@ -20,12 +20,11 @@ const videoSchema = new mongoose.Schema({
     },
     categories: {
         type: Array,
-        required: false,
+        required: true,
     },
     views: {
         type: Number,
         required: true,
-        default: 0
     },
     visibility: {
         type: String,
