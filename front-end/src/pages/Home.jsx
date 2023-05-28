@@ -2,31 +2,32 @@ import Navbar from '../components/Navbar';
 import Gallery from '../components/Gallery'
 import Hero from '../components/Hero';
 import {useState, useEffect} from 'react';
-import fetchDataFromApi from '../utils/api';
+// import fetchDataFromApi from '../utils/api;
+import axios from 'axios';
 
 const Home = () =>{
     const [searchKeyword, setSearchKeyword] = useState('');
     const [firstVideo, setFirstVideo] = useState({});
     const [allVideo, setAllVideo] = useState([]);
-    const [startingPartOfUrl, setStartingPartOfUrl] = useState('');
+    // const [startingPartOfUrl, setStartingPartOfUrl] = useState('');
     useEffect(() =>{
+        const fetchData = async () =>{
+            try {
+                const response = await axios.get('http://localhost:8080/api/videos');
+                setFirstVideo(response.data[0]);
+                setAllVideo(response.data);
+            } catch (error) {
+                console.error(error);
+                // Handle error
+            }
+        }
         fetchData();
     }, [])
-    const fetchData = async () =>{
-        try{
-            const {results} = await fetchDataFromApi('/movie/popular');
-            setFirstVideo(results[0]);
-            setAllVideo(results);
-            setStartingPartOfUrl('https://image.tmdb.org/t/p/original');
-        }catch(error){
-            console.error(error);
-        }
-    }
     return(
         <div className="home">
             <Navbar setSearchKeyword={setSearchKeyword} />
-            <Hero startingPartOfUrl={startingPartOfUrl} {...firstVideo} />
-            <Gallery startingPartOfUrl={startingPartOfUrl} allVideo={allVideo} searchKeyword={searchKeyword} />
+            <Hero firstVideo={firstVideo} />
+            <Gallery allVideo={allVideo} searchKeyword={searchKeyword} />
         </div>
     )
 }

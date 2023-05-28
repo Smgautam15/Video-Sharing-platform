@@ -1,23 +1,30 @@
-const Hero = ({startingPartOfUrl, original_title, poster_path, release_date}) => {
+const Hero = ({firstVideo}) => {
+    // const videoFileName = videoURL?.videoURL.slice(9);
+    const {title, desc, videoURL, username, views, createdAt} = firstVideo;
     return(
+        videoURL ?
         <div className="hero">
             <div className="video-container">
-                <img src={startingPartOfUrl + poster_path} alt="poster" />
+                <video controls>
+                    <source src={`http://localhost:8080/api/videos/video/${videoURL.slice(8)}`} />
+                </video>
             </div>
             <div className="video-info">
                 <h1 className="title">
-                    <span>{original_title}</span>
+                    <span>{title}</span>
                 </h1>
+                <p className="desc">{desc}</p>
                 <p className="date-duration-views">
-                    <span>{release_date}</span>
+                    <span>{new Date().toDateString(createdAt)}</span>
                     <span>14 Minus</span>
-                    <span>0 Views</span>
+                    <span>{views} Views</span>
                 </p>
                 <div className="publisher">
-                    <p className="username">Ibrahim Ansari</p>
+                    <p className="username">{username}</p>
                 </div>
             </div>
-        </div>
+        </div> :
+        <h2>Loading</h2>
     )
 }
 

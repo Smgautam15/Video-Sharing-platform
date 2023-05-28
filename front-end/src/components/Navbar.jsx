@@ -1,6 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 
 const Navbar = ({setSearchKeyword}) =>{
+    const username = localStorage.getItem('username');
     const navigate = useNavigate();
     const signout = event =>{
         localStorage.removeItem('username');
@@ -17,7 +18,7 @@ const Navbar = ({setSearchKeyword}) =>{
                     {
                         localStorage.getItem('username') ?
                         <>
-                            <span onClick={() => navigate('/my-videos')}>My Videos</span>
+                            <span onClick={() => navigate(`/user/${username}`)}>My Videos</span>
                             <span>|</span>
                             <span onClick={() => navigate('/upload')}>Upload</span>
                             <span>|</span>

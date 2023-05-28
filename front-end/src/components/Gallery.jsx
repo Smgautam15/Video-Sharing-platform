@@ -1,25 +1,35 @@
 import {useState} from 'react';
 
-const VideoCard = ({startingPartOfUrl, original_title, poster_path, release_date}) =>{
+const VideoCard = ({_id, title, desc, videoURL, username, categories, views, visibility, createdAt}) =>{
     return(
+        videoURL ?
         <div className="card">
-            <img src={startingPartOfUrl + poster_path} alt="poster" />
+            <video controls>
+                <source src={`http://localhost:8080/api/videos/video/${videoURL.slice(8)}`} type="video/mp4" />
+            </video>
             <div className="video-info">
-                <p>{original_title}</p>
+                <p className="title">{title}</p>
+                <p className="desc">{desc}</p>
+                <div className="cat-visi">
+                    <span>{categories[0]}</span>
+                    <span>{visibility}</span>
+                </div>
                 <p className="date-info">
-                    <span>{release_date}</span>
-                    <span>0 views</span>
+                    <span>{new Date().toDateString(createdAt)}</span>
+                    <span>{views} views</span>
                 </p>
+                <p className="username">{username}</p>
             </div>
-        </div>
+        </div> :
+        <h2>Loading...</h2>
     )
 }
 
-const Gallery = ({startingPartOfUrl, allVideo, searchKeyword}) =>{
+const Gallery = ({allVideo, searchKeyword}) =>{
     const [viewAll, setViewAll] = useState(false);
     let temp = null;
     if(searchKeyword){
-        temp = allVideo.filter(video => video.original_title.toLowerCase().includes(searchKeyword.toLowerCase()));
+        temp = allVideo.filter(video => video.title.toLowerCase().includes(searchKeyword.toLowerCase()));
     }
     return(
         <div className="gallery">
@@ -29,13 +39,12 @@ const Gallery = ({startingPartOfUrl, allVideo, searchKeyword}) =>{
             </p>
             <div className="g-div">
                 {   searchKeyword ?
-                    temp.map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl}  {...video} />) :
+                    temp.map(video => <VideoCard key={video._id} {...video} />) :
                     (
                         viewAll ?
-                        allVideo.map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl}  {...video} />) :
-                        allVideo.slice(0, 4).map((video, index) => <VideoCard key={index} startingPartOfUrl={startingPartOfUrl} {...video} />)
+                        allVideo.map(video => <VideoCard key={video._id} {...video} />) :
+                        allVideo.slice(0, 4).map(video => <VideoCard key={video._id} {...video} />)
                     )
-                    
                 }
             </div>
         </div>

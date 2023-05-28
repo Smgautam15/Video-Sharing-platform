@@ -9,7 +9,7 @@ const Upload = () =>{
     const [desc, setDesc] = useState('');
     const [categories, setCategories] = useState([]);
     const [visibility, setVisibility] = useState([]);
-    const [video, setVideo] = useState(null);
+    const [videoURL, setVideoURL] = useState(null);
     const handleTitleChange = event =>{
         setTitle(event.target.value);
     }
@@ -23,12 +23,12 @@ const Upload = () =>{
         setVisibility(event.target.value);
     }
     const handleVideoFileChange = event =>{
-        setVideo(event.target.files[0]);
+        setVideoURL(event.target.files[0]);
     }
     const onSubmitHandle = async event =>{
         event.preventDefault();
         const formData = new FormData();
-        formData.append('video', video);
+        formData.append('videoURL', videoURL);
         formData.append('title', title);
         formData.append('desc', desc);
         formData.append('categories', categories);
